@@ -1,0 +1,20 @@
+body{
+	max-width: 250px;
+	font-family: Arial, sans-serif;
+	margin: auto;
+	padding: 10px;
+}
+#forms{
+	position: relative;
+}
+#goal{
+	position: absolute;
+}
+#meal{
+	position: relative;
+	top:0;
+	left: 0;
+}
+#show{
+	position: relative;
+}

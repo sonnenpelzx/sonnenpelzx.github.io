@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Calorie Tracker</title>
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
+<body>
+	<button id="setGoal">set goal</button>
+	<button id="addMeal">add meal</button>
+	<button id="delMeal">del last meal</button>
+	<div id="forms">
+		<div id="goal">
+			Define your goal<br>
+			<form>
+			  <label for="caloriesGoal">Calories</label><br>
+			  <input type="number" min="0" step="1" id="caloriesGoal" name="caloriesGoal"><br>
+			  <label for="proteinGoal">Protein</label><br>
+			  <input type="number" min="0" step="1" id="proteinGoal" name="proteinGoal"><br>
+			  <label for="fatGoal">Fat</label><br>
+			  <input type="number" min="0" step="1" id="fatGoal" name="fatGoal"><br>
+			  <label for="carbsGoal">Carbohydrate</label><br>
+			  <input type="number" min="0" step="1" id="carbsGoal" name="carbsGoal"><br>
+			  <input type="button" value="Submit" id="submitGoal">
+			</form>
+		</div>
+		<div id="meal">
+			Add a meal<br>
+			<form>
+			  <label for="grammsMeal">Amount in g</label><br>
+			  <input type="number" min="0" step="1" id="grammsMeal" name="grammsMeal"><br>
+			  Input the nutrition for 100g<br>
+			  <label for="caloriesMeal">Calories</label><br>
+			  <input type="number" min="0" step="1" id="caloriesMeal" name="caloriesMeal"><br>
+			  <label for="proteinMeal">Protein</label><br>
+			  <input type="number" min="0" step="1" id="proteinMeal" name="proteinMeal"><br>
+			  <label for="fatMeal">Fat</label><br>
+			  <input type="number" min="0" step="1" id="fatMeal" name="fatMeal"><br>
+			  <label for="carbsMeal">Carbohydrate</label><br>
+			  <input type="number" min="0" step="1" id="carbsMeal" name="carbsMeal"><br>
+			  <input type="button" value="Submit" id="submitMeal">
+			</form>
+		</div>
+	</div>
+	<br><br>
+	<div id="show"></div> <br><br>
+	<div id="showGoal">
+		Your goal is:
+		<table>
+			<tr>
+				<td>Calories</td>
+				<td id="caloriesGoalShow"></td>
+			</tr>
+			<tr>
+				<td>Fat</td>
+				<td id="fatGoalShow"></td>
+			</tr>
+			<tr>
+				<td>Carbohydrate</td>
+				<td id="carbsGoalShow"></td>
+			</tr>
+			<tr>
+				<td>Protein</td>
+				<td id="proteinGoalShow"></td>
+			</tr>
+		</table>
+	</div>
+	<div id="showMeal">
+		You have eaten:
+		<table>
+			<tr>
+				<td>Calories</td>
+				<td id="caloriesMealShow"></td>
+			</tr>
+			<tr>
+				<td>Fat</td>
+				<td id="fatMealShow"></td>
+			</tr>
+			<tr>
+				<td>Carbohydrate</td>
+				<td id="carbsMealShow"></td>
+			</tr>
+			<tr>
+				<td>Protein</td>
+				<td id="proteinMealShow"></td>
+			</tr>
+		</table>
+	</div>
+	<script src="js/index.js"></script>
+</body>
+</html>
