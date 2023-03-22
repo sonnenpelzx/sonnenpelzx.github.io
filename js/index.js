@@ -5,6 +5,7 @@ var goal = null
 
 function getValues(){
 	if(window.localStorage.getItem("currentDate") != currentDate){
+		removeall()
 		window.localStorage.setItem("currentDate", currentDate);
 
 	}
