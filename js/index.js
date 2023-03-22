@@ -1,12 +1,7 @@
 var currentDate = new Date().toJSON().slice(0, 10);
 currentDate = JSON.stringify(currentDate);
 var meals = [];
-var goal = {
-	calories: 0,
-	carbs: 0,
-	fat: 0,
-	protein: 0,
-};
+var goal = null
 
 function getValues(){
 	if(window.localStorage.getItem("currentDate") != currentDate){
@@ -92,13 +87,15 @@ function setGoal(){
 	let protein = document.querySelector('#proteinGoal').value;
 	let carbs = document.querySelector('#carbsGoal').value;
 	if(calories != '' && carbs != '' && fat!='' && protein!=''){
-		goal ={
-			calories: calories,
-			fat: fat,
-			protein: protein,
-			carbs: carbs,
+		if(calories >= 0 && carbs >= 0 && fat >= 0 && protein >= 0 ){
+			goal ={
+				calories: calories,
+				fat: fat,
+				protein: protein,
+				carbs: carbs,
+			}
+			window.localStorage.setItem("goal", JSON.stringify(goal));
 		}
-		window.localStorage.setItem("goal", JSON.stringify(goal));
 	}
 	checkGoal();
 	showGoal();
@@ -179,15 +176,15 @@ submitMeal.addEventListener("click", function(){addMeal()});
 showGoalButton.addEventListener("click", function(){showGoalForm()});
 showMealButton.addEventListener("click", function(){showMealForm()});
 delMealButton.addEventListener("click", function(){delMeal()});
-
 getValues()
+showMealForm()
 if(goal == null){
 	showGoalForm()
 }
 else{
 	showMealForm()
-	checkGoal();
-	showGoal();
-	showEaten();
 }
+checkGoal();
+showGoal();
+showEaten();
 
