@@ -110,23 +110,25 @@ function addMeal(){
 	let fat = document.querySelector('#fatMeal').value;
 	let protein= document.querySelector('#proteinMeal').value;
 	let carbs= document.querySelector('#carbsMeal').value;
-	if(calories != '' || carbs != ''||fat!=''||protein!=''){
-		calories *= gramms / 100 
-		fat *= gramms / 100 
-		protein *= gramms / 100 
-		carbs *= gramms / 100 
-		let meal ={
-			calories: calories,
-			fat: fat,
-			protein: protein,
-			carbs: carbs,
+	if(calories != '' && carbs != ''&&fat!=''&&protein!=''){
+		if(calories >= 0 && carbs >= 0 && fat >= 0 && protein >= 0){
+			calories *= gramms / 100 
+			fat *= gramms / 100 
+			protein *= gramms / 100 
+			carbs *= gramms / 100 
+			let meal ={
+				calories: calories,
+				fat: fat,
+				protein: protein,
+				carbs: carbs,
+			}
+			meals.push(meal)
+			var mealsString = [];
+			meals.forEach(function(n){
+				mealsString.push(JSON.stringify(n))
+			})
+			window.localStorage.setItem("meals", mealsString.join('-'))
 		}
-		meals.push(meal)
-		var mealsString = [];
-		meals.forEach(function(n){
-			mealsString.push(JSON.stringify(n))
-		})
-		window.localStorage.setItem("meals", mealsString.join('-'))
 	}
 	checkGoal();
 	showGoal();
