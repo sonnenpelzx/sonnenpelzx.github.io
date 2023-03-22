@@ -8,6 +8,9 @@ function getValues(){
 		window.localStorage.setItem("currentDate", currentDate);
 
 	}
+	else if(window.localStorage.getItem("meals") == null){
+		
+	}
 	else{
 		mealsString = window.localStorage.getItem("meals").split('-');
 		if(mealsString[0] != ''){
