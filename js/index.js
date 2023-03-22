@@ -8,15 +8,15 @@ function getValues(){
 		window.localStorage.setItem("currentDate", currentDate);
 
 	}
-	else if(window.localStorage.getItem("meals") == null){
-		
-	}
 	else{
-		mealsString = window.localStorage.getItem("meals").split('-');
-		if(mealsString[0] != ''){
-			mealsString.forEach(function(n) { meals.push(JSON.parse(n));});
-			goal = JSON.parse(window.localStorage.getItem("goal"));
+		mealsString = window.localStorage.getItem("meals");
+		if(mealsString != null){
+			mealsString = mealsString.split('-')
+			if(mealsString[0] != ''){
+				mealsString.forEach(function(n) { meals.push(JSON.parse(n));});
+			}
 		}
+		goal = JSON.parse(window.localStorage.getItem("goal"));
 	}
 }
 function removeall(){
