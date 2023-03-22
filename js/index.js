@@ -110,8 +110,8 @@ function addMeal(){
 	let fat = document.querySelector('#fatMeal').value;
 	let protein= document.querySelector('#proteinMeal').value;
 	let carbs= document.querySelector('#carbsMeal').value;
-	if(calories != '' && carbs != ''&&fat!=''&&protein!=''){
-		if(calories >= 0 && carbs >= 0 && fat >= 0 && protein >= 0){
+	if(calories != '' && carbs != ''&&fat!=''&&protein!=''&&gramms != ''){
+		if(calories >= 0 && carbs >= 0 && fat >= 0 && protein >= 0 && gramms >=0){
 			calories *= gramms / 100 
 			fat *= gramms / 100 
 			protein *= gramms / 100 
