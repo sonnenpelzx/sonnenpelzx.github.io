@@ -10,8 +10,10 @@ function getValues(){
 	}
 	else{
 		mealsString = window.localStorage.getItem("meals").split('-');
-		mealsString.forEach(function(n) { meals.push(JSON.parse(n));});
-		goal = JSON.parse(window.localStorage.getItem("goal"));
+		if(mealsString[0] != ''){
+			mealsString.forEach(function(n) { meals.push(JSON.parse(n));});
+			goal = JSON.parse(window.localStorage.getItem("goal"));
+		}
 	}
 }
 function removeall(){
@@ -177,14 +179,14 @@ showGoalButton.addEventListener("click", function(){showGoalForm()});
 showMealButton.addEventListener("click", function(){showMealForm()});
 delMealButton.addEventListener("click", function(){delMeal()});
 getValues()
-showMealForm()
 if(goal == null){
 	showGoalForm()
 }
 else{
 	showMealForm()
+	checkGoal();
+	showGoal();
+	showEaten();
 }
-checkGoal();
-showGoal();
-showEaten();
+
 
