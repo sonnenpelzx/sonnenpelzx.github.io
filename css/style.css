@@ -11,6 +11,20 @@ td:nth-child(3){
 tr:nth-child(2) td:nth-child(3){
     border-top: 2px solid;    
 }
+.vergleich{
+    background-color: #a5d46a;
+}
+.vergleichZocken{
+    background-color: #ffdf80;
+}
+.vergleichTreffen{
+    background-color:#ffa080;
+}
+.block{
+    display: inline-block;
+    padding: 2px;
+    margin-top: 5px;
+}
 tr:nth-child(26) td:nth-child(3){
     border-bottom: 2px solid;
 }
@@ -24,7 +38,9 @@ td{
 table {
     border-collapse: collapse;
     margin-top: 10px;
+    table-layout:fixed;
 }
 th{
     padding-bottom: 10px;
+    word-wrap:break-word;
 }
