@@ -28,8 +28,15 @@ tr:nth-child(2) td:nth-child(3){
 tr:nth-child(26) td:nth-child(3){
     border-bottom: 2px solid;
 }
-.weekday{
-    width: 80px;
+@media screen and (max-width: 30rem) { 
+    .weekday{
+        width: 30px;
+    } 
+}
+@media screen and (min-width: 30rem) { 
+    .weekday{
+        width: 80px;
+    } 
 }
 td{
     text-align: right;

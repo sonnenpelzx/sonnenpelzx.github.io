@@ -142,8 +142,13 @@ function generateTable(){
     for(let i = -1; i < tableSize; i++){
         const head = document.createElement("th");
         let date = (dateSelector.value) ? new Date(dateSelector.value): new Date();
-        date.setDate(date.getDate() + i) 
-        head.innerHTML = `${dayTranslate[date.getDay()]} ${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`    
+        date.setDate(date.getDate() + i)
+        if(window.screen.width >= 600){
+            head.innerHTML = `${dayTranslate[date.getDay()]} ${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`    
+        }
+        else{
+            head.innerHTML = `${dayTranslate[date.getDay()][0]} ${date.getDate()}.${date.getMonth()}.`    
+        }
         plan.rows[0].appendChild(head);
         plan.rows[0].cells[i + 2].classList.add("weekday")
     }
@@ -164,8 +169,14 @@ function generateTable(){
 function newRender(){
     for(let i = -1; i < tableSize; i++){
         let date = (dateSelector.value) ? new Date(dateSelector.value): new Date();
-        date.setDate(date.getDate() + i) 
-        plan.rows[0].cells[i + 2].innerText = `${dayTranslate[date.getDay()]} ${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`    
+        date.setDate(date.getDate() + i)
+        const head =  plan.rows[0].cells[i + 2]
+        if(window.screen.width >= 600){
+            head.innerHTML = `${dayTranslate[date.getDay()]} ${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`    
+        }
+        else{
+            head.innerHTML = `${dayTranslate[date.getDay()][0]} ${date.getDate()}.${date.getMonth()}.`    
+        }
     }
     showSchicht();
     vergleichSchichten();
