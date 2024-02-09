@@ -147,7 +147,7 @@ function generateTable(){
             head.innerHTML = `${dayTranslate[date.getDay()]} ${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`    
         }
         else{
-            head.innerHTML = `${dayTranslate[date.getDay()][0]} ${date.getDate()}.${date.getMonth()}.`    
+            head.innerHTML = `${dayTranslate[date.getDay()].slice(0, 2)} ${date.getDate()}.${date.getMonth()}.`    
         }
         plan.rows[0].appendChild(head);
         plan.rows[0].cells[i + 2].classList.add("weekday")
@@ -175,7 +175,7 @@ function newRender(){
             head.innerHTML = `${dayTranslate[date.getDay()]} ${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`    
         }
         else{
-            head.innerHTML = `${dayTranslate[date.getDay()][0]} ${date.getDate()}.${date.getMonth()}.`    
+            head.innerHTML = `${dayTranslate[date.getDay()].slice(0, 2)} ${date.getDate()}.${date.getMonth()}.`    
         }
     }
     showSchicht();
