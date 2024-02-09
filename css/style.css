@@ -1,153 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600&family=Source+Serif+4:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&family=Source+Serif+4:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@900&family=Source+Serif+4:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,200&family=Source+Serif+4:wght@300&display=swap');
-body{
-	text-align: center;
-	align-items: center;
-	font-family: 'Nunito', sans-serif;
-	-webkit-font-smoothing: antialiased;
-	margin: 0;
+.schicht{
+    background-color: red;
 }
-section{
-	display: block;
-	flex-wrap: wrap;
-	max-width: 900px;
-	width: auto;
-	align-self: center;
-	margin: auto;
-	margin-bottom: 20px;
+td{
+    border: 1px solid;
 }
-section:hover{
-	background-color: #F0F7FF;
+td:nth-child(3){
+    border-left-width: 2px;
+    border-right-width: 2px;
 }
-#header{
-	margin-top: 30px;
-	font-size: 3rem;
-	font-weight: bold;
+tr:nth-child(2) td:nth-child(3){
+    border-top: 2px solid;    
 }
-#arrow{
-	margin-bottom: 70px;
-	margin-top: 40px;
+tr:nth-child(26) td:nth-child(3){
+    border-bottom: 2px solid;
 }
-#inTouch{
-	font-size: 2rem;
-	font-weight: 600;
-	max-width: 200px;
-	display: inline-block;
-	background-color: #F0F7FF;
-	border-style: solid;
-	border-width: 4px;
-	border-radius: 4px;
-	text-align: center;
-	margin-top: -45px;
+.weekday{
+    width: 80px;
 }
-#footer{
-	background-color: #FFFEE8;
-	margin-top: 100px;
-	min-height: 300px;
-	font-size: 2.0rem;
-	font-weight: bold;
-	display: flex;
-	flex-direction: column;
-	text-align: left;
-	align-items: center;
+td{
+    text-align: right;
+    background-color: aliceblue;
 }
-#github{
-	height: 30px;
-	width: auto;
+table {
+    border-collapse: collapse;
+    margin-top: 10px;
 }
-#linkedin{
-	height: 30px;
-	width: auto;
-}
-#email{
-	font-weight: 900;
-}
-.footer-img{
-	margin-right: 10px;
-}
-a:link{
-	color: black;
-	text-decoration: none;
-}
-a:visited{
-	color: black;
-	text-decoration: none;
-}
-a:hover{
-	color: purple;
-	text-decoration: underline;
-}
-.findme{
-	margin-top: 30px;
-	display: inline-block;
-	display: flex;
-	min-width: 450px;
-}
-@media (max-width: 480px) {
-  .findme {
-    min-width: 0px;
-    font-size: 1.5rem;
-  }
-}
-.section-title{
-	font-weight: bold;
-	font-size: 2.2rem;
-	margin-left: 10px;
-	margin-right: 10px;
-}
-.number{
-	align-self: flex-end;
-	margin-bottom: 10px;
-	font-weight: bold;
-}
-.section-teaser{
-	align-self: flex-end;
-	font-family: 'Source Serif 4', serif;
-	color: #777777;
-	font-size: 1.8rem;
-}
-button{
-	padding-left: 10px;
-	padding-right: 10px;
-	border-style: solid;
-	border-width: 3px;
-	border-radius: 100px;
-	border-color: black;
-	box-shadow: 0px 0px white;
-}
-button:hover{
-	box-shadow: -2px -3px black;
-}
-.blueBack{
-	background-color: #0A7B83;
-}
-.blue{
-	color: #0A7B83;
-}
-.green{
-	color: #2AA876;
-}
-.greenBack{
-	background-color: #2AA876;
-}
-.red{
-	color: #CE4D45;
-}
-.redBack{
-	background-color: #CE4D45;
-}
-.yellow{
-	color: #FFD265;
-}
-.yellowBack{
-	background-color: #FFD265;
-}
-.purple{
-	color: #9575CD;
-}
-.purpleBack{
-	background-color: #9575CD;
+th{
+    padding-bottom: 10px;
 }
