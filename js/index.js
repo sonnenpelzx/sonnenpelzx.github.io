@@ -144,10 +144,10 @@ function generateTable(){
         let date = (dateSelector.value) ? new Date(dateSelector.value): new Date();
         date.setDate(date.getDate() + i)
         if(window.screen.width >= 600){
-            head.innerHTML = `${dayTranslate[date.getDay()]} ${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`    
+            head.innerHTML = `${dayTranslate[date.getDay()]} ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`    
         }
         else{
-            head.innerHTML = `${dayTranslate[date.getDay()].slice(0, 2)} ${date.getDate()}.${date.getMonth()}.`    
+            head.innerHTML = `${dayTranslate[date.getDay()].slice(0, 2)} ${date.getDate()}.${date.getMonth() + 1}.`    
         }
         plan.rows[0].appendChild(head);
         plan.rows[0].cells[i + 2].classList.add("weekday")
@@ -172,10 +172,10 @@ function newRender(){
         date.setDate(date.getDate() + i)
         const head =  plan.rows[0].cells[i + 2]
         if(window.screen.width >= 600){
-            head.innerHTML = `${dayTranslate[date.getDay()]} ${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`    
+            head.innerHTML = `${dayTranslate[date.getDay()]} ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`    
         }
         else{
-            head.innerHTML = `${dayTranslate[date.getDay()].slice(0, 2)} ${date.getDate()}.${date.getMonth()}.`    
+            head.innerHTML = `${dayTranslate[date.getDay()].slice(0, 2)} ${date.getDate()}.${date.getMonth() + 1}.`    
         }
     }
     showSchicht();
