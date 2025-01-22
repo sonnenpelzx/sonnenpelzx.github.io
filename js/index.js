@@ -1,184 +1,171 @@
-const plan = document.getElementById("plan");
-const auswahl = document.getElementById("auswahl")
-auswahl.addEventListener("change", newRender);
-const schichtTyp = document.getElementById("schichtTyp")
-schichtTyp.addEventListener("change", newRender);
-const dateSelector = document.getElementById("dateSelector");
-dateSelector.addEventListener("change", newRender)
-let tableSize = 7
-const vergleich = document.getElementById("vergleich")
-vergleich.addEventListener("change", newRender)
-const range = document.getElementById("range")
-range.addEventListener("change", rangeChange)
-//adebc
-const schichtAblauf = ['s', 's', 's', '-', 'f', 'f', 'f', 'f', '-', 'n', 'n', 'n', 'n', '-', '-', 'f', 'f', 'f', '-', '-', 'n', 'n', 'n', '-', 's', 's', 's', 's', '-', '-', '-', '-', '-', '-', '-'] 
-const schichtStart= new Date('1/2/2024');
-const dayTranslate = {
-                    0: "Sonntag",
-                    1: "Montag",
-                    2: "Dienstag",
-                    3: "Mittwoch",
-                    4: "Donnerstag",
-                    5: "Freitag",
-                    6: "Samstag",   
-                }
-const schichtBedeutung = {ot: 
-                        {f: {
-                            begin: 5,
-                            end: 11 
-                            },
-                        s: {begin: 12,
-                            end: 19
-                        },
-                        n: {begin: 20,
-                            end: 4}
-                        },  
-                        oc:
-                        {f:{ 
-                            begin: 5,
-                            end: 12 
-                            },
-                        s: {
-                            begin: 13,
-                            end: 19
-                        },
-                        n: {
-                            begin: 20,
-                            end: 4}
-                        }}
-const schichtOffset = { a: 0,
-                        d: 7,
-                        e: 21,
-                        b: 14,
-                        c: 28}
+const exp_debaters_input = document.getElementById("exp_debaters_input")
+const nov_debaters_input = document.getElementById("nov_debaters_input")
+const exp_debaters_input_submit = document.getElementById("exp_debaters_input_submit")
+const nov_debaters_input_submit = document.getElementById("nov_debaters_input_submit")
+const exp_debaters_list = document.getElementById("exp_debaters_list")
+const nov_debaters_list = document.getElementById("nov_debaters_list")
+const rooms_list = document.getElementById("rooms_list")
+const leftovers = document.getElementById("leftovers")
+const debate_format = document.getElementById("debate_format")
+let exp_debaters = []
+let nov_debaters = []
+let format = "OPD"
 
-function getSchicht(plan, offset, schichtAuswahl){
-    const today = (dateSelector.value) ? new Date(dateSelector.value): new Date();
-    const diffTime = Math.abs(today - schichtStart);
-    const diffDays = (Math.ceil(diffTime / (1000 * 60 * 60 * 24))  - 1  + schichtOffset[schichtAuswahl])% schichtAblauf.length;
-    return plan[(offset + diffDays)%schichtAblauf.length]
+debate_format.addEventListener("change", change_debate_format)
+exp_debaters_input_submit.addEventListener("click", add_exp_debater)
+nov_debaters_input_submit.addEventListener("click", add_nov_debater)
+
+function change_debate_format(){
+    format = debate_format.value
+    render_debaters()
 }
 
-function rangeChange(){
-    tableSize = range.value
-    generateTable()
+function add_exp_debater(){
+   let input = exp_debaters_input.value
+    exp_debaters.push(input)
+    render_debaters()
+}
+function add_nov_debater(){
+    let input = nov_debaters_input.value
+    nov_debaters.push(input)
+    render_debaters()
 }
 
-function vergleichSchichten(){
-    for(let i = -1; i < tableSize; i++){
-        plan.rows[0].cells[i + 2].classList.remove("vergleich");
-        plan.rows[0].cells[i + 2].classList.remove("vergleichZocken");
-        plan.rows[0].cells[i + 2].classList.remove("vergleichTreffen");
+function render_debaters(){
+    exp_debaters_list.innerHTML = ""
+    nov_debaters_list.innerHTML = ""
+    exp_debaters.forEach((debater, index) => {
+        add_debater_to_list(debater, index, exp_debaters, exp_debaters_list, nov_debaters)
+    })
+    nov_debaters.forEach((debater, index) => {
+        add_debater_to_list(debater, index, nov_debaters, nov_debaters_list, exp_debaters)
+    })
+    if(format === "BP"){
+        let [rooms, lo] = create_BP_rooms()
+        render_BP_rooms(rooms, lo)
     }
-    if(vergleich.value === 'x'){
-        return;
-    }
-    for(let offset = -1; offset < tableSize; offset++){
-        if(getSchicht(schichtAblauf, offset, vergleich.value) === '-' && getSchicht(schichtAblauf, offset, auswahl.value) === '-' && getSchicht(schichtAblauf, offset -1, auswahl.value) != 'n' && getSchicht(schichtAblauf, offset -1, auswahl.value) != 'n'){
-            plan.rows[0].cells[offset + 2].classList.add("vergleich");
-        }
-        else if((getSchicht(schichtAblauf, offset, vergleich.value) === 'f' && getSchicht(schichtAblauf, offset, auswahl.value) === '-') || (getSchicht(schichtAblauf, offset, vergleich.value) === '-' && getSchicht(schichtAblauf, offset, auswahl.value) === 'f') || (getSchicht(schichtAblauf, offset, vergleich.value) === 's' && getSchicht(schichtAblauf, offset, auswahl.value) === '-') || (getSchicht(schichtAblauf, offset, vergleich.value) === '-' && getSchicht(schichtAblauf, offset, auswahl.value) === 's')){
-            plan.rows[0].cells[offset + 2].classList.add("vergleichZocken");
-        }
-        else if(getSchicht(schichtAblauf, offset, vergleich.value) === '-' || getSchicht(schichtAblauf, offset, auswahl.value) === '-'){
-            plan.rows[0].cells[offset + 2].classList.add("vergleichTreffen");
-        }
+    else{
+        let [rooms, lo] = create_OPD_rooms()
+        render_OPD_rooms(rooms, lo)
     }
 }
 
-function clearTable(){
-    for(let i = 1; i <= 25; i++){
-        const row = plan.rows[i]
-        for(let j = 0; j <= tableSize; j++){
-            const cell = row.cells[j + 1]
-            cell.style.display = "table-cell"
-            cell.rowSpan = "1"
-            cell.classList.remove("schicht")
+function add_debater_to_list(debater, index, array1, listDom1, array2){
+        let li = document.createElement('li')
+        let text = document.createElement('div')
+        let del = document.createElement('button')
+        let move = document.createElement('button')
+        text.innerText = `${debater} `
+        listDom1.appendChild(li)
+        li.appendChild(text)
+        text.appendChild(del)
+        text.appendChild(move)
+        del.innerText = "Delete"
+        move.innerText = "move"
+        del.onclick = function(){
+            array1.splice(index, 1)
+            render_debaters()
         }
+        move.onclick = function(){
+            li.remove()
+            array1.splice(index, 1)
+            array2.push(debater)
+            render_debaters()
+        }
+}
+
+function shuffle(array) {
+    for (let i = array.length - 1; i >= 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
 }
 
-function showSchicht(){
-    clearTable()
-    for(let offset = -1; offset < tableSize; offset++){
-        const schicht = getSchicht(schichtAblauf, offset, auswahl.value)
-        if(schicht === '-'){
-            continue
-        }
-        const begin = schichtBedeutung[schichtTyp.value][schicht].begin + 1;
-        const end = schichtBedeutung[schichtTyp.value][schicht].end + 1;
-        if(schicht === 'n'){
-            plan.rows[begin].cells[offset + 2].rowSpan = `${25 - begin + 1}`
-            plan.rows[begin].cells[offset + 2].classList.add("schicht")
-            for(let i = begin + 1; i <= 25; i++){
-                const row = plan.rows[i];
-                row.cells[offset + 2].style.display = 'none';
-            }
-            if(offset < tableSize - 1){
-                plan.rows[1].cells[offset + 3].rowSpan = `${end}`
-                plan.rows[1].cells[offset + 3].classList.add("schicht")
-                for(let i = 2; i <= end; i++){
-                    const row = plan.rows[i];
-                    row.cells[offset + 2].style.display = 'none';
-                }
-            }
-        }
-        else{
-            plan.rows[begin].cells[offset + 2].rowSpan = `${end - begin + 1}`
-            plan.rows[begin].cells[offset + 2].classList.add("schicht")
-            for(let i = begin + 1 ; i <= end; i++){
-                const row = plan.rows[i];
-                row.cells[offset + 2].style.display = 'none';
-            }
-        }
-    }   
+function appendArrays(array1, array2){
+    let result = []
+    array1.forEach((e) => result.push(e))
+    array2.forEach((e) => result.push(e))
+    return result
 }
 
-function generateTable(){
-    plan.innerHTML = ""
-    const first = document.createElement("tr")
-    first.appendChild(document.createElement("th"))
-    plan.appendChild(first)
-    for(let i = -1; i < tableSize; i++){
-        const head = document.createElement("th");
-        let date = (dateSelector.value) ? new Date(dateSelector.value): new Date();
-        date.setDate(date.getDate() + i)
-        if(window.screen.width >= 600){
-            head.innerHTML = `${dayTranslate[date.getDay()]} ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`    
-        }
-        else{
-            head.innerHTML = `${dayTranslate[date.getDay()].slice(0, 2)} ${date.getDate()}.${date.getMonth() + 1}.`    
-        }
-        plan.rows[0].appendChild(head);
-        plan.rows[0].cells[i + 2].classList.add("weekday")
+function create_BP_rooms(){
+    let exp_dbs = exp_debaters.slice()
+    shuffle(exp_dbs)
+    let nov_dbs = nov_debaters.slice()
+    shuffle(nov_dbs)
+    let all_debaters = appendArrays(exp_dbs, nov_dbs)
+    let number_of_rooms = Math.floor(all_debaters.length/8)
+    let rooms = []
+    for(let i = 0; i < number_of_rooms; i++){
+        rooms.push([[], [], [], []])
     }
-    for(let i = 0; i < 25; i++){
-        const row = document.createElement("tr");
-        let cell = document.createElement("td")
-        const text = document.createTextNode(`${i}:00`)
-        cell.appendChild(text)
-        row.appendChild(cell)
-        for(let j = 0; j <= tableSize; j++){
-            cell = document.createElement("td");
-            row.appendChild(cell)
-        }
-        plan.appendChild(row)
+    for(let i = 0; i < number_of_rooms*8; i++){
+        let room = Math.floor((i / 4)) % number_of_rooms
+        let team = i%4
+        rooms[room][team].push(all_debaters[i])
     }
-    newRender()
+    all_debaters.splice(0, number_of_rooms*8)
+    return [rooms, all_debaters]
 }
-function newRender(){
-    for(let i = -1; i < tableSize; i++){
-        let date = (dateSelector.value) ? new Date(dateSelector.value): new Date();
-        date.setDate(date.getDate() + i)
-        const head =  plan.rows[0].cells[i + 2]
-        if(window.screen.width >= 600){
-            head.innerHTML = `${dayTranslate[date.getDay()]} ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`    
+
+function render_BP_rooms(rooms, lo){
+    rooms_list.innerHTML = ""
+    rooms.forEach((r, room_index) => {
+       let room = document.createElement('li')
+        room.innerText = 'Room' 
+        let ul = document.createElement('ul')
+        for(let i = 0; i < 4; i++){
+            let li = document.createElement('li')
+            ul.appendChild(li)
+            li.innerText = r[i]
         }
-        else{
-            head.innerHTML = `${dayTranslate[date.getDay()].slice(0, 2)} ${date.getDate()}.${date.getMonth() + 1}.`    
-        }
-    }
-    showSchicht();
-    vergleichSchichten();
+        room.appendChild(ul)
+        rooms_list.appendChild(room)
+    })
+   leftovers.innerText = lo 
 }
-generateTable();
+
+function render_OPD_rooms(rooms, lo){
+    rooms_list.innerHTML = ""
+    rooms.forEach((r, room_index) => {
+       let room = document.createElement('li')
+        room.innerText = 'Room' 
+        let ul = document.createElement('ul')
+        for(let i = 0; i < 2; i++){
+            let li = document.createElement('li')
+            ul.appendChild(li)
+            li.innerText = r[i]
+        }
+        room.appendChild(ul)
+        rooms_list.appendChild(room)
+    })
+   leftovers.innerText = lo 
+}
+
+function create_OPD_rooms(){
+    let exp_dbs = exp_debaters.slice()
+    shuffle(exp_dbs)
+    let nov_dbs = nov_debaters.slice()
+    shuffle(nov_dbs)
+    let number_of_rooms = Math.floor((exp_debaters.length + nov_debaters.length)/6)
+    let rooms = []
+    for(let i = 0; i < number_of_rooms; i++){
+        rooms.push([[],[]])
+    }
+    let first_ex = exp_dbs.slice(0, number_of_rooms * 2)
+    let first_nov = nov_dbs.slice(0, number_of_rooms * 2)
+    let last_debaters = appendArrays(exp_dbs.slice(number_of_rooms*2), nov_dbs.slice(number_of_rooms*2))
+    while(first_ex.length < number_of_rooms * 2)
+        first_ex.push(last_debaters.pop())
+    while(first_nov.length < number_of_rooms * 2)
+        first_nov.push(last_debaters.pop())
+    shuffle(last_debaters)
+    for(let i = 0; i < number_of_rooms * 2; i++){
+        let room = Math.floor(i/2) % number_of_rooms
+        let team = i % 2
+        rooms[room][team].push(first_ex.pop())
+        rooms[room][team].push(first_nov.pop())
+        rooms[room][team].push(last_debaters.pop())
+    }
+    return [rooms, last_debaters]
+}
